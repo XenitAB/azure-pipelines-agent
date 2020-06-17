@@ -1,0 +1,27 @@
+replicas: 2
+
+image:
+  repository: quay.io/xenitab/azp-agent
+  tag: ubuntu-16.04
+  pullPolicy: Always
+
+azpUrl: null
+azpPool: kubernetes-azdo-agents
+azpToken: null
+azpAgentName: $HOSTNAME
+
+resources:
+  limits:
+    cpu: 2
+    memory: 4Gi
+  requests:
+    cpu: 1
+    memory: 1Gi
+
+extraEnv: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
