@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "azure-pipelines-agent.fullname" . }}
+  labels:
+    {{- include "azure-pipelines-agent.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "azure-pipelines-agent.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "azure-pipelines-agent.fullname" . }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "azure-pipelines-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+        env:
+          - name: AZP_URL
+            value: "{{ .Values.azpAgent.url }}"
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.azpAgent.secret.name }}
+                key: azpToken
+          - name: AZP_POOL
+            value: "{{ .Values.azpAgent.pool }}"
+          - name: AZP_AGENT_NAME
+            value: "{{ .Values.azpAgent.agentName }}"
+        envFrom:
+          - secretRef:
+              name: {{ .Values.azpAgent.secret.name }}
+        stdin: false
+        tty: false
+        volumeMounts:
+        {{- if .Values.securityContext.privileged }}
+          - name: docker-socket-volume
+            mountPath: /var/run/docker.sock
+        {{- end }}
+    {{- with .Values.image.imagePullSecret }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      initContainers: []
+      terminationGracePeriodSeconds: 30
+      volumes:
+      {{- if .Values.securityContext.privileged }}
+        - name: docker-socket-volume
+          hostPath:
+            path: /var/run/docker.sock
+            type: File
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+  volumeClaimTemplates: []

@@ -1,6 +1,0 @@
-apiVersion: v2
-name: azure-devops-agents
-description: Helm chart for Azure Devops agent pool
-type: application
-version: 1.0.0
-appVersion: 1.0.0

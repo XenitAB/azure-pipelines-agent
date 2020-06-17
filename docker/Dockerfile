@@ -24,13 +24,12 @@ RUN apt-get update \
     ssh \
     mono-complete \
     software-properties-common \
-    apt-transport-https
+    apt-transport-https \
+    moby-engine \
+    moby-cli
 
 # Update packages
-RUN apt-get update \
-    && apt-mark hold mysql-server \
-    && apt-mark hold mysql-server-5.7 \
-    && apt-get upgrade -y
+RUN apt-get upgrade -y
 
 # Update azure-cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
@@ -40,9 +39,6 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsof
     && dpkg -i packages-microsoft-prod.deb \
     && apt-get update \
     && apt-get install -y powershell
-
-# Install Docker for Docker-in-Docker
-RUN apt-get install -y moby-engine moby-cli
 
 # Cleanup
 RUN apt-get autoremove -y \
