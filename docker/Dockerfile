@@ -24,7 +24,8 @@ RUN apt-get update \
     openssh-client \
     mono-complete \
     software-properties-common \
-    apt-transport-https
+    apt-transport-https \
+    python3.7
 
 # Update packages
 RUN apt-get upgrade -y
