@@ -26,6 +26,7 @@ RUN apt-get update \
     software-properties-common \
     apt-transport-https \
     python3 \
+    python3-setuptools \
     python3-pip
 
 # Update packages
