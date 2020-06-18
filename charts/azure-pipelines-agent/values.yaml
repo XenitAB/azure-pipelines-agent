@@ -2,7 +2,7 @@ replicaCount: 1
 
 azpAgent:
   url: https://dev.azure.com/my_org
-  agentName: $HOSTNAME
+  agentName: ""
   pool: kubernetes-statefulset
   token: "super-secret-token"
   secret:
