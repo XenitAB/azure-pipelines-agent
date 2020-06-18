@@ -25,7 +25,8 @@ RUN apt-get update \
     mono-complete \
     software-properties-common \
     apt-transport-https \
-    python3.7
+    python3 \
+    python3-pip
 
 # Update packages
 RUN apt-get upgrade -y
