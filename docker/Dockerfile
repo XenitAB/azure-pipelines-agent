@@ -7,9 +7,6 @@ FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
-RUN wget -q https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb \
-    && dpkg -i packages-microsoft-prod.deb
-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -17,26 +14,29 @@ RUN apt-get update \
     jq \
     git \
     iputils-ping \
-    libcurl3 \
-    libicu55 \
+    libcurl4 \
+    libicu60 \
     libunwind8 \
     wget \
     netcat \
     unzip \
     build-essential \
-    ssh \
+    openssh-client \
     mono-complete \
     software-properties-common \
-    apt-transport-https \
-    powershell \
-    moby-engine \
-    moby-cli
+    apt-transport-https
 
 # Update packages
 RUN apt-get upgrade -y
 
 # Update azure-cli
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+# Update powershell
+RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
+    && dpkg -i packages-microsoft-prod.deb \
+    && apt-get update \
+    && apt-get install -y powershell moby-engine moby-cli
 
 # Cleanup
 RUN apt-get autoremove -y \
