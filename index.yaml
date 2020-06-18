@@ -2,8 +2,18 @@ apiVersion: v1
 entries:
   azure-pipelines-agent:
   - apiVersion: v2
+    appVersion: 0.1.1
+    created: "2020-06-18T09:04:44.685581772Z"
+    description: A Helm chart for Kubernetes
+    digest: d495463d50e89502cec5a824a8692f948d547d2736a0316e18505840781b4a54
+    name: azure-pipelines-agent
+    type: application
+    urls:
+    - https://XenitAB.github.io/azure-pipelines-agent/azure-pipelines-agent-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 0.1.0
-    created: "2020-06-18T08:43:59.111987297Z"
+    created: "2020-06-18T09:04:44.68521067Z"
     description: A Helm chart for Kubernetes
     digest: 62b0e7792a28d20e92c7b1336b9f0822383d305daac243bce0dbcc5e987bb894
     name: azure-pipelines-agent
@@ -13,7 +23,7 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2020-06-18T08:43:59.111568187Z"
+    created: "2020-06-18T09:04:44.684830367Z"
     description: A Helm chart for Kubernetes
     digest: 8f0d85fadd721ce138a30055c373ab4db10516645832ed2be040e8f35d35c02c
     name: azure-pipelines-agent
@@ -21,4 +31,4 @@ entries:
     urls:
     - https://XenitAB.github.io/azure-pipelines-agent/azure-pipelines-agent-0.0.1.tgz
     version: 0.0.1
-generated: "2020-06-18T08:43:59.110795769Z"
+generated: "2020-06-18T09:04:44.684190062Z"
